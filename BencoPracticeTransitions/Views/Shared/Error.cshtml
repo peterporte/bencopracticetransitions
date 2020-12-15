@@ -1,0 +1,9 @@
+﻿@model ErrorViewModel
+@using BencoPracticeTransitions.Framework.Enums
+@using BencoPracticeTransitions.ViewModels.Shared
+@{
+    ViewBag.Alert = new AlertViewModel { AlertType = AlertTypeEnum.Error, IsInternalServerError = true, CanCloseAlert = false};
+}
+
+<div style="padding-top: 50px;"><partial name="_Alert" /></div>
+<p style="padding-bottom: 100px;"><strong>Request Id: </strong> @Model.RequestId</p>

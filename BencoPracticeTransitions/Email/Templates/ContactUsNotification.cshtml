@@ -1,0 +1,26 @@
+﻿@using BencoPracticeTransitions.Framework.Helper
+@model BencoPracticeTransitions.ViewModels.Home.ContactUsModel
+@{
+    var type = Model.GetType();
+}
+    <p style="font-family: Calibri; font-size: 12pt;">A message has been received on the Benco Practice Transitions site</p>
+    <table>
+        <tr>
+            <td width="200px"><p style="font-family: Calibri; font-size: 12pt;"><b>Name</b>:</p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b></b>@Model.FirstName @Model.LastName</p></td>
+        </tr>
+        <tr>
+            <td width="200px"><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.PhoneNumber))</b>:</p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b></b>@Model.PhoneNumber</p></td>
+        </tr>
+        <tr>
+            <td width="200px"><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.Message))</b>:</p></td>
+        </tr>
+        <tr>
+            <td colspan="2"><p style="font-family: Calibri; font-size: 12pt; text-align: justify;">@Model.Message</p></td>
+        </tr>
+        <tr>
+            <td width="200px"><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.HowDidYouHearAboutUs))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b></b>@Model.ReferredBy</p></td>
+        </tr>
+    </table>

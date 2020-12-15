@@ -1,0 +1,298 @@
+﻿@using BencoPracticeTransitions.Framework.Enums
+@using BencoPracticeTransitions.Framework.Extensions
+@using BencoPracticeTransitions.ViewModels.JobListing
+@using Microsoft.Extensions.Options
+@using reCAPTCHA.AspNetCore
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
+
+@model InquireModel
+@{
+    ViewBag.Title = "Look for a Job";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css
+    {
+    <link href="@Url.Content("~/css/job-listing.css")" rel="stylesheet" />
+}
+
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel-body panel-primary">
+                <div id="iosAlertPlaceholder"></div>
+                <div><partial name="_Alert" /></div>
+                <div class="panel panel-default" style="width: 100%">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>Look for a Job</h4>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control window-unload-bound", placeholder = "John" })
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control window-unload-bound", placeholder = "Doe" })
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.Address, new { @class = "form-control window-unload-bound", placeholder = "295 CenterPoint Boulevard Pittston, PA 18640" })
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactNumber)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control window-unload-bound", placeholder = "Doe" })
+                                @Html.ValidationMessageFor(model => model.ContactNumber)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactEmail)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactEmail, new { @class = "form-control window-unload-bound", placeholder = "jdoe@example.net" })
+                                @Html.ValidationMessageFor(model => model.ContactEmail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.WorkExperience)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.WorkExperience, typeof(WorkExperienceEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.WorkExperience)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="workExperienceOtherPanel">
+                            @Html.LabelFor(m => m.WorkExperienceOther)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.WorkExperienceOther, new { @class = "form-control window-unload-bound", placeholder = "Current job position" })
+                                @Html.ValidationMessageFor(model => model.WorkExperienceOther)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JobType)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.JobType, typeof(JobTypeEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.JobType)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="specialtyPanel">
+                            @Html.LabelFor(m => m.Specialty)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.Specialty, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.Specialty)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JobLocation)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.JobLocation, new { @class = "form-control window-unload-bound", @placeholder = "See help text below" })
+                                @Html.ValidationMessageFor(model => model.JobLocation)
+                                <span class="help-block" style="text-align: justify">
+                                    Note: You can be as specific or broad as you would like. For example you can enter "NYC" or "Lower Manhattan".
+                                    You can specify a state such as "Florida" or part of a state such as "Northern California". You can also specify
+                                    more general terms like "Rural area" or "West of Mississippi"
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Availability)
+
+                            <div id="availabilityPanel" class="panel-body gray-bordered">
+
+                                @for (var i = 0; i < Model.Availability.Count; i++)
+                                {
+
+                                    <div class="col-sm-6 col-lg-4 hours-input">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(m => m.Availability[i].Checked, new Dictionary<string, object> { { "onclick", "SetAvailabilityEnabledDisabled()" }, { "class", "window-unload-bound" } })
+                                            @Model.Availability[i].Day
+                                            @Html.TextBoxFor(m => m.Availability[i].Hours, new { @class = "form-control window-unload-bound", disabled = "disabled", placeholder = "9-5" })
+                                            <span id="@($"Availability_{i}__ValidationMessage")" for=@($"Availability_{i}__ValidationMessage") class="field-validation-error validation-summary-valid" style="color: #b94a48">Value required.</span>
+                                            @Html.HiddenFor(m => m.Availability[i].Day)
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Availability)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LinkedInAccount)
+                            <div>
+                                @Html.TextBoxFor(model => model.LinkedInAccount, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.LinkedInAccount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label(null, "Upload Resume")
+                            <div id="resumePanel">
+                                <input type="file" name="resumeUploader" id="resumeUploader" style="margin-bottom: 5px;" class="form-control gray-bordered window-unload-bound" />
+                                <a class="pull-right" onclick="$('#resumeUploader').val('');">Clear</a>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Resume)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AdditionalNotes)
+
+                            <div>
+                                @Html.TextAreaFor(model => model.AdditionalNotes, 8, 50, new { @class = "form-control window-unload-bound", maxlength = "1000000", placeholder = "Anything else you would like to tell us about you or your practice, this job posting, any additional instructions or questions you may have." })
+                                @Html.ValidationMessageFor(model => model.AdditionalNotes)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HowDidYouHearAboutUs)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.HowDidYouHearAboutUs, typeof(HowDidYouHearAboutUsEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUs)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="howDidYouHearAboutUsDetailPanel">
+                            <label id="howDidYouHearAboutUsDetailLabel" for="@nameof(Model.HowDidYouHearAboutUsDetail)">How did you hear about us details</label>
+                            <div>
+                                @Html.TextBoxFor(model => model.HowDidYouHearAboutUsDetail, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUsDetail)
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.Recaptcha(RecaptchaSettings.Value)
+                            @Html.ValidationMessage("reCaptchaError", new { @class = "text-danger" })
+                        </div>
+                        <input type="submit" value="Submit" class="btn btn-primary" style="max-width: 100px;" id="submit"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section scripts{ 
+}
+    <script src="~/js/recaptchaScrollFix.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ShowIosCompatibilityIfApplicable();
+
+            var isModelStateValid = '@ViewData.ModelState.IsValid';
+            var isUploadedResumeInvalid = '@ViewData.ModelState.Keys.Contains("Resume")';
+
+            SetAvailabilityEnabledDisabled();
+            ValidateAvailability();
+
+            SetDependantFieldVisibility("specialty", "JobType", '@JobTypeEnum.Doctor.ToString()');
+            SetDependantFieldVisibility("workExperienceOther", "WorkExperience", '@WorkExperienceEnum.Other.ToString()');
+            SetHowDidYouHearAboutUsDetail();
+
+            if (isModelStateValid.toLowerCase() === 'false') {
+                ValidateAvailabilityPanel();
+                ValidateResumePanel(isUploadedResumeInvalid);
+            }
+        });
+
+
+        function SetAvailabilityEnabledDisabled() {
+            var availabilityCount = $('#availabilityPanel input:checkbox').length;
+
+            for (var index = 0; index < parseInt(availabilityCount); index++) {
+
+                var chk = $('#Availability_' + index.toString() + '__Checked');
+                var txb = $('#Availability_' + index.toString() + '__Hours');
+
+                if (chk.is(":checked")) {
+                    txb.removeAttr("disabled");
+                }
+                else {
+                    if (!txb.is(":disabled")) {
+                        txb.prop("disabled", "disabled");
+                        txb.val("");
+                        txb.removeClass("input-validation-error");
+                        $('#Availability_' + index + '__ValidationMessage').addClass("validation-summary-valid");
+                    }
+                }
+            }
+        }
+
+
+        function ValidateAvailability() {
+            var availabilityCount = $('#availabilityPanel input:checkbox').length;
+
+            var errors = false;
+
+            for (var index = 0; index < parseInt(availabilityCount); index++) {
+
+                var chk = $('#Availability_' + index.toString() + '__Checked');
+                var txb = $('#Availability_' + index.toString() + '__Hours');
+
+                if (chk.is(":checked") && txb.val() === "") {
+                    txb.addClass("input-validation-error");
+                    $('#Availability_' + index + '__ValidationMessage').removeClass("validation-summary-valid");
+                    errors = true;
+                }
+            }
+            if (errors) { /*Increase the min height to account for error message even on inputs without error*/
+                $(".hours-input").addClass("hours-input-with-errors");
+            }
+        }
+
+
+        function ValidateAvailabilityPanel() {
+            var checkBoxesCount = $('#availabilityPanel input:checkbox').length;
+            var tickedCheckBoxes = $('#availabilityPanel input:checkbox:checked').length;
+
+            if (checkBoxesCount > 0 && tickedCheckBoxes === 0) {
+                $('#availabilityPanel').css({ 'border-color': '#b94a48' });
+            }
+        }
+
+        function ValidateResumePanel(isResumeInvalid) {
+            if (isResumeInvalid.toLowerCase() === "true") {
+                $('#resumePanel').css({ 'border-color': '#b94a48' });
+            }
+        }
+
+        document.getElementsByClassName('g-recaptcha')[0].setAttribute('data-callback', 'scrollFixCaptcha');        
+    </script>
+}

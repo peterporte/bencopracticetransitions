@@ -1,0 +1,378 @@
+﻿body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-image: url("/images/background-large.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position-x: center;
+    background-position-y: top;
+}
+
+
+/*Edge*/
+@supports ( -ms-accelerator:true ) {
+    html {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    body {
+        overflow: auto;
+        height: 100%;
+    }
+}
+/*Ie 10/11*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    html {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    body {
+        overflow: auto;
+        height: 100%;
+    }
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error, textarea.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+select.input-validation-error {
+    border-color: #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+    .validation-summary-errors ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Bootstrap overrides */
+body.modal-open {
+    padding-right: 0 !important;
+    overflow: auto;
+}
+
+.modal {
+    top: 0;
+}
+
+.modal-dialog {
+    margin: 100px auto;
+}
+
+.modal-body {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.radio {
+    margin-left: 20px;
+}
+
+/* Identity Server 3 Specific CSS */
+
+.logo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    display: block;
+}
+
+@media screen and (min-width: 670px ) {
+    .double-wide-panel-container {
+        width: 662px;
+        background-color: #F7F7F7;
+        color: black;
+        margin: auto;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        overflow: auto;
+    }
+
+        .double-wide-panel-container .panel {
+            float: left;
+            border: none;
+            margin: 0;
+            box-shadow: none;
+        }
+
+        .double-wide-panel-container .panel-default {
+            border-right: 1px solid #ddd;
+        }
+}
+
+@media screen and (max-width: 669px) {
+    .double-wide-panel-container .side-panel {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+}
+
+
+.double-wide-panel-container .panel .panel-heading {
+    border-radius: 0;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+@media screen and (min-width: 670px ) {
+    .double-wide-panel {
+        width: 660px;
+        background-color: #F7F7F7;
+        color: black;
+        margin: auto;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        overflow: auto;
+    }
+}
+
+@media screen and (max-width: 669px) {
+    .double-wide-panel {
+        width: 330px;
+        background-color: #F7F7F7;
+        color: black;
+        margin: auto;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        overflow: auto;
+    }
+}
+
+/* Hide background on XS devices*/
+@media screen and (max-width: 767px) {
+    .body-content {
+        background-color: inherit;
+        background-image: inherit;
+    }
+
+}
+/* Make recaptcha size right on Small displays*/
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .g-recaptcha {
+        transform: scale(0.93);
+        transform-origin: 0;
+    }
+}
+.panel .radio label {
+    color: black;
+}
+
+.status-message {
+    width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+.alert-wide {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.request-id {
+    margin-left: 0px !important;
+}
+
+.panel-heading {
+    margin: 0px;
+    background-color: #3b689d !important;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1px solid #ddd;
+}
+
+.panel-heading-login {
+    background-color: #f5f5f5 !important;
+    text-align: center;
+}
+
+.panel-footer {
+    margin: 0px;
+    background-color: #ebebeb !important;
+}
+
+
+
+.panel-title-login {
+    color: #000000 !important;
+}
+
+.panel-body .btn {
+    margin-top: 5px;
+}
+
+.form-group {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.form-group-center {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    width: 100%;
+    text-align: center;
+    max-width: 300px;
+}
+
+
+
+.btn-login {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.btn-large {
+    width: 290px;
+    height: 290px;
+    float: left;
+    margin: 10px;
+    line-height: 290px;
+    font-size: 3em;
+}
+
+@media screen and (max-width: 669px) {
+    .btn-large {
+        height: 145px;
+        line-height: 145px;
+        font-size: 2em;
+    }
+}
+
+.panel label {
+    font-weight: normal;
+}
+
+
+/* Additional styles */
+
+a.input-assistance {
+    display: block;
+    float: right;
+    margin-bottom: 15px;
+    font-size: smaller;
+}
+
+p.wide-status-message {
+    margin: 0 0 10px;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    left: 0;
+}
+
+div.login-panel-details {
+    height: 185px;
+}
+
+div.no-bottom-padding {
+    padding-bottom: 0;
+}
+
+.clearboth {
+    clear: both;
+}
+
+textarea {
+    min-height: 54px;
+}
+
+.gray-bordered {
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+}
+
+@media screen and (max-width: 575px){
+    #rc-imageselect, .g-recaptcha {
+    	transform:scale(0.911);
+	    -webkit-transform:scale(0.911);
+	    transform-origin:0 0;
+	    -webkit-transform-origin:0 0;
+	}
+}
+
+@media screen and (max-width: 389px) {
+    #rc-imageselect, .g-recaptcha {
+        transform: scale(0.68);
+        -webkit-transform: scale(0.68);
+        transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+    }
+}
+
+.window-unload-bound {
+/*
+    this class is being looked-up by the
+    Navigate Away Alert functionality.
+    Removing this will cause it to not work*/
+}
+
+.help-block {
+    font-size: smaller;
+    color: #a6a6a6;
+    padding-left: 15px;
+}
+
+.close {
+    padding-left: 25px;
+}

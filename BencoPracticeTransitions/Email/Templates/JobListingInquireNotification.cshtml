@@ -1,0 +1,87 @@
+﻿@using BencoPracticeTransitions.Framework.Extensions
+@using BencoPracticeTransitions.Framework.Helper
+@using BencoPracticeTransitions.ViewModels.JobListing
+@model InquireModel
+@{
+    var type = Model.GetType();
+}
+<p style="font-family: Calibri; font-size: 12pt;">A new person looking for job has been submitted.</p>
+<table>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.FirstName))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.FirstName</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.LastName))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.LastName</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.Address))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.Address</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.ContactNumber))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ContactNumber</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.ContactEmail))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ContactEmail</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.WorkExperience))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@(Model.WorkExperienceOther ?? Model.WorkExperience) </p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.JobType))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.JobType</p></td>
+    </tr>
+    @if (Model.JobType == JobTypeEnum.Doctor.Description())
+    {
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.Specialty))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.Specialty</p></td>
+        </tr>
+    }
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.JobLocation))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.JobLocation</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.Availability))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b></p></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <table>
+                @foreach (var availability in Model.Availability)
+                {
+                    if (availability.Checked)
+                    {
+                        <tr>
+                            <td><p style="font-family: Calibri; font-size: 12pt;">@availability.Day</p></td>
+                            <td><p style="font-family: Calibri; font-size: 12pt;">: @availability.Hours</p></td>
+                        </tr>
+                    }
+                }
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.LinkedInAccount))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.LinkedInAccount</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.AdditionalNotes))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.AdditionalNotes</p></td>
+    </tr>
+    <tr>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.HowDidYouHearAboutUs))</b></p></td>
+        <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ReferredBy</p></td>
+    </tr>
+
+</table>
+
+<p style="font-family: Calibri; font-size: 12pt;">Please see attached.</p>
+<hr/>
+<p style="font-family: Calibri; font-size: 10pt;"><i>This is an automated email. Please do not reply.</i></p>

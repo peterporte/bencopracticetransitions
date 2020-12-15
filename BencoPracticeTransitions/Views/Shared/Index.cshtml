@@ -1,0 +1,74 @@
+﻿@model BencoPracticeTransitions.ViewModels.Home.PracticeOptionsModel
+@{
+    ViewBag.Title = "Benco Practice Transitions";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@section css
+    {
+    <link href="@Url.Content("~/css/index.css")" rel="stylesheet" />
+}
+
+<div class="row" style="padding-bottom: 20px;">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-1">
+        <h1>Practice Transitions</h1>
+        <span>by <img src="~/images/benco_logo_no_tagline_225.png" style="transform: scale(0.67); transform-origin: 0;" alt="logo" /></span>
+    </div>
+</div>
+<br />
+<div class="row" style="padding-bottom: 20px;">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">What would you like to do?</h3>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm(null, null, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(false, "")
+
+                    <table class="menu">
+                        <tr>
+                            <td class="menu-item">
+                                <a href="@Url.Action("Sell", "Practice")" id="sellAPractice">
+                                    <span class="menu-item-text">Sell a Practice</span>
+                                    <img class="menu-item-icon" src="~/images/SellPractice.png" alt="Sell a Practice" />
+                                </a>
+                            </td>
+                            <td class="menu-item" style="background-color: #72c267">
+                                <a href="@Url.Action("Buy", "Practice")" id="buyAPractice">
+                                    <span class="menu-item-text">Buy a Practice</span>
+                                    <img class="menu-item-icon" src="~/images/BuyPractice.png" alt="Buy a Practice" />
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="menu-item">
+                                <a href="@Url.Action("Create", "JobListing")" id="postAJob">
+                                    <span class="menu-item-text">Post a Job</span>
+                                    <img class="menu-item-icon" src="~/images/PostJob.png" alt="Post a Job" />
+                                </a>
+                            </td>
+                            <td class="menu-item">
+                                <a href="@Url.Action("Inquire", "JobListing")" id="findAJob">
+                                    <span class="menu-item-text">Find a Job</span>
+                                    <img class="menu-item-icon" src="~/images/FindJob.png" alt="Find a Job" />
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                Have a question? <span style="white-space:nowrap">Contact our @Html.ActionLink("Practice Transition Team", "ContactUs", "Home", null, new {id="contactUs"})</span>
+                            </td>
+
+                        </tr>
+                    </table>
+                    <div style="padding-top: 15px">
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@using Microsoft.Extensions.Configuration
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IConfiguration Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <LINK href="/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <LINK href="/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+    <LINK href="~/css/site.css" rel="stylesheet" type="text/css">
+    @RenderSection("css", false)
+
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/site.js"></script>
+    <script src="/js/pym.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <div id="footerFrameWrapper"></div>
+    <script>
+        var pymFooterParent = new pym.Parent('footerFrameWrapper', '@Configuration["Urls:ParentFooterUrl"]', {});
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+<script type="text/javascript">
+    var submitted = false;
+    $(document).ready(function() {
+        $("form").submit(function() {
+            submitted = true;
+        });
+
+        BindWindowUnloadEventListener();
+    });
+</script>

@@ -1,0 +1,258 @@
+﻿@using BencoPracticeTransitions.Framework.Enums
+@using BencoPracticeTransitions.Framework.Extensions
+@using BencoPracticeTransitions.ViewModels.JobListing
+@using Microsoft.Extensions.Options
+@using reCAPTCHA.AspNetCore
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
+@model CreateModel
+@{
+    ViewBag.Title = "Post a Job Opening";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css
+    {
+    <link href="@Url.Content("~/css/job-listing.css")" rel="stylesheet" />
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel-body panel-primary">
+                <div id="iosAlertPlaceholder"></div>
+                <div><partial name="_Alert" /></div>
+                <div class="panel panel-default" style="width: 100%">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>Post a Job Opening</h4>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PracticeName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.PracticeName, new { @class = "form-control window-unload-bound", placeholder = "Benco Dental" })
+                                @Html.ValidationMessageFor(model => model.PracticeName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PracticeLocation)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.PracticeLocation, new { @class = "form-control window-unload-bound", placeholder = "Pittson, PA" })
+                                @Html.ValidationMessageFor(model => model.PracticeLocation)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactFirstName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactFirstName, new { @class = "form-control window-unload-bound", placeholder = "John" })
+                                @Html.ValidationMessageFor(model => model.ContactFirstName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactLastName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactLastName, new { @class = "form-control window-unload-bound", placeholder = "Doe" })
+                                @Html.ValidationMessageFor(model => model.ContactLastName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactNumber)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control window-unload-bound", placeholder = "1-800-462-3626" })
+                                @Html.ValidationMessageFor(model => model.ContactNumber)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactEmail)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactEmail, new { @class = "form-control window-unload-bound", placeholder = "jdoe@example.net" })
+                                @Html.ValidationMessageFor(model => model.ContactEmail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JobType)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.JobType, typeof(JobTypeEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.JobType)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="specialtyPanel">
+                            @Html.LabelFor(m => m.Specialty)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.Specialty, new { @class = "form-control window-unload-bound", placeholder = "Endodontist" })
+                                @Html.ValidationMessageFor(model => model.Specialty)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JobHours)
+
+                            <div id="jobHoursPanel" class="panel-body gray-bordered">
+
+                                @for (var i = 0; i < Model.JobHours.Count; i++)
+                                {
+                                    <div class="col-sm-6 col-lg-4 hours-input">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(m => m.JobHours[i].Checked, new Dictionary<string, object> { { "onclick", "SetJobHoursEnabledDisabled()" }, { "class", "window-unload-bound" } })
+                                            @Model.JobHours[i].Day
+                                            @Html.TextBoxFor(m => m.JobHours[i].Hours, new { @class = "form-control window-unload-bound", disabled = "disabled", placeholder = "9-5" })
+                                            <span id=@($"JobHours_{i}__ValidationMessage") for=@($"JobHours_{i}__ValidationMessage") class="field-validation-error validation-summary-valid" style="color: #b94a48">Value required.</span>
+                                            @Html.HiddenFor(m => m.JobHours[i].Day)
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            @Html.ValidationMessageFor(m => m.JobHours)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JobRequirements)
+
+                            <div>
+                                @Html.TextAreaFor(model => model.JobRequirements, 8, 50, new { @class = "form-control window-unload-bound", placeholder = "3 years experience" })
+                                @Html.ValidationMessageFor(model => model.JobRequirements)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LinkedInAccount)
+                            <div>
+                                @Html.TextBoxFor(model => model.LinkedInAccount, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.LinkedInAccount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AdditionalNotes)
+                            <div>
+                                @Html.TextAreaFor(model => model.AdditionalNotes, 8, 50, new { @class = "form-control window-unload-bound", maxlength = "1000000", placeholder = "Anything else you would like to tell us about you or your practice the job you are posting, any additional instructions or questions you may have." })
+                                @Html.ValidationMessageFor(model => model.AdditionalNotes)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HowDidYouHearAboutUs)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.HowDidYouHearAboutUs, typeof(HowDidYouHearAboutUsEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUs)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="howDidYouHearAboutUsDetailPanel">
+                            <label id="howDidYouHearAboutUsDetailLabel" for="@nameof(Model.HowDidYouHearAboutUsDetail)">How did you hear about us details</label>
+                            <div>
+                                @Html.TextBoxFor(model => model.HowDidYouHearAboutUsDetail, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUsDetail)
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+
+                            @Html.Recaptcha(RecaptchaSettings.Value)
+                            @Html.ValidationMessage("reCaptchaError", new { @class = "text-danger" })
+                        </div>
+                        <input type="submit" value="Submit" class="btn btn-primary" style="max-width: 100px;" id="submit" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section scripts{ 
+}
+    <script src="~/js/recaptchaScrollFix.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ShowIosCompatibilityIfApplicable();
+            var isModelStateValid = '@ViewData.ModelState.IsValid';
+
+            SetJobHoursEnabledDisabled();
+            ValidateJobHours();
+            SetDependantFieldVisibility("specialty", "JobType", '@JobTypeEnum.Doctor.ToString()');
+            SetHowDidYouHearAboutUsDetail();
+
+            if (isModelStateValid.toLowerCase() === 'false') {
+                ValidateJobHoursPanel();
+            }
+        });
+
+
+        function SetJobHoursEnabledDisabled() {
+            var jobHoursCount = $('#jobHoursPanel input:checkbox').length;
+
+            for (var index = 0; index < parseInt(jobHoursCount); index++) {
+
+                var chk = $('#JobHours_' + index.toString() + '__Checked');
+                var txb = $('#JobHours_' + index.toString() + '__Hours');
+
+                if (chk.is(":checked")) {
+                    txb.removeAttr("disabled");
+                } else {
+                    if (!txb.is(":disabled")) {
+                        txb.prop("disabled", "disabled");
+                        txb.val("");
+                        txb.removeClass("input-validation-error");
+                        $('#JobHours_' + index + '__ValidationMessage').addClass("validation-summary-valid");
+                    }
+                }
+            }
+        }
+
+        function ValidateJobHours() {
+            var jobHoursCount = $('#jobHoursPanel input:checkbox').length;
+
+            var errors = false;
+            for (var index = 0; index < parseInt(jobHoursCount); index++) {
+
+                var chk = $('#JobHours_' + index.toString() + '__Checked');
+                var txb = $('#JobHours_' + index.toString() + '__Hours');
+
+                if (chk.is(":checked") && txb.val() === "") {
+                    txb.addClass("input-validation-error");
+                    $('#JobHours_' + index + '__ValidationMessage').removeClass("validation-summary-valid");
+                    errors = true;
+                }
+            }
+            if (errors) { /*Increase the min height to account for error message even on inputs without error*/
+                $(".hours-input").addClass("hours-input-with-errors");
+            }
+        }
+
+        function ValidateJobHoursPanel() {
+            var checkBoxesCount = $('#jobHoursPanel input:checkbox').length;
+            var tickedCheckBoxes = $('#jobHoursPanel input:checkbox:checked').length;
+
+            if (checkBoxesCount > 0 && tickedCheckBoxes === 0) {
+                $('#jobHoursPanel').css({ 'border-color': '#b94a48' });
+            }
+        }
+
+        document.getElementsByClassName('g-recaptcha')[0].setAttribute('data-callback', 'scrollFixCaptcha');      
+    </script>
+}

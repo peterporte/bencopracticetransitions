@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Thank You";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<div class="row" style="padding-bottom: 20px;">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-1">
+        <h1>Practice Transitions</h1>
+        <span>by <img src="~/images/benco_logo_no_tagline_225.png" style="transform: scale(0.67); transform-origin: 0;" alt="logo" /></span>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="panel-body panel-primary">
+            <div id="iosAlertPlaceholder"></div>
+            <div><partial name="_Alert" /></div>
+            <div class="panel panel-default" style="width: 100%">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4>Thank You</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    Thank you for choosing Practice Transitions from Benco Dental!
+                    Someone will be contacting you shortly!
+                    <div style="padding-top: 50px;">
+                        @Html.ActionLink("Back to Homepage", "Index", "Home", null, new { @class = "btn btn-primary", style = "max-width: 150px;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-8 col-md-offset-2 text-center" style="padding: 50px 0 100px 0;">
+    <h2></h2>
+    <h3></h3>
+</div>
+

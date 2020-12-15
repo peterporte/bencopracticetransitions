@@ -1,0 +1,51 @@
+﻿@using BencoPracticeTransitions.ViewModels.Shared
+
+@{
+    var alertModel = (ViewBag.Alert ?? TempData["alerts"]) as AlertViewModel;
+    TempData["alerts"] = null;
+}
+
+<div id="operation-result-message-container" class="row">
+    <div class="col-xs-12">
+        @if (alertModel != null)
+        {
+            <div class="alert @alertModel.AlertDismissableClass @alertModel.AlertTypeStyleClass break-word">             
+                @{
+                    if (@alertModel.CanCloseAlert)
+                    {
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    }
+
+                    var messages = alertModel.Messages;
+                }
+                @if (messages != null)
+                {
+                    if (messages.Count == 1)
+                    {
+                        <p>@messages[0]</p>
+                    }
+                    else
+                    {
+                        <ul>
+                            @foreach (var message in messages)
+                            {
+                                <li>@message</li>
+                            }
+                        </ul>
+                    }
+                }
+
+                @if (alertModel.IsInternalServerError)
+                {
+                    <p>
+                        An error occurred in processing the request. Please go back to the previous page and try again.
+                    </p>
+                    <br/>
+                    <p>
+                        If this error persists, please contact <a href="http://ithelp.benco.com">Technical Support.</a>
+                    </p>
+                }
+            </div>
+        }
+    </div>
+</div>

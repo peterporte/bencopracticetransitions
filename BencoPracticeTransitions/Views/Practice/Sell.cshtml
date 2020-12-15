@@ -1,0 +1,223 @@
+﻿@using BencoPracticeTransitions.Framework.Enums
+@using BencoPracticeTransitions.Framework.Extensions
+@using BencoPracticeTransitions.ViewModels.Practice
+@using Microsoft.Extensions.Options
+@using reCAPTCHA.AspNetCore
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
+
+@model SellPracticeModel
+@{
+    ViewBag.Title = "Sell a Practice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel-body panel-primary">
+                <div id="iosAlertPlaceholder"></div>
+                <div><partial name="_Alert" /></div>
+                <div class="panel panel-default" style="width: 100%">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>@ViewBag.Title</h4>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PracticeName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.PracticeName, new { @class = "form-control window-unload-bound", placeholder = "Benco Dental" })
+                                @Html.ValidationMessageFor(model => model.PracticeName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.City)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.City, new { @class = "form-control window-unload-bound", placeholder = "Pittston" })
+                                @Html.ValidationMessageFor(model => model.City)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.State)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.State, new { @class = "form-control window-unload-bound", placeholder = "PA" })
+                                @Html.ValidationMessageFor(model => model.State)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ZipCode)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control window-unload-bound", placeholder = "18640" })
+                                @Html.ValidationMessageFor(model => model.ZipCode)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PracticeType)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.PracticeType, new { @class = "form-control window-unload-bound", placeholder = "Endodontic" })
+                                @Html.ValidationMessageFor(model => model.PracticeType)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactFirstName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactFirstName, new { @class = "form-control window-unload-bound", placeholder = "John" })
+                                @Html.ValidationMessageFor(model => model.ContactFirstName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactLastName)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactLastName, new { @class = "form-control window-unload-bound", placeholder = "Doe" })
+                                @Html.ValidationMessageFor(model => model.ContactLastName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactPhone)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactPhone, new { @class = "form-control window-unload-bound", placeholder = "1-800-462-3626" })
+                                @Html.ValidationMessageFor(model => model.ContactPhone)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactEmail)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.ContactEmail, new { @class = "form-control window-unload-bound", placeholder = "jdoe@example.net" })
+                                @Html.ValidationMessageFor(model => model.ContactEmail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AskingPrice)
+
+                            <div>
+                                @Html.TextBoxFor(model => model.AskingPrice, new { @class = "form-control window-unload-bound", type = "number", min = 0, max = 10000000, placeholder = "750,000" })
+                                @Html.ValidationMessageFor(model => model.AskingPrice)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IsAppraisalNeeded)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.IsAppraisalNeeded, typeof(BooleanEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.IsAppraisalNeeded)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CollectionsAmount)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.CollectionsAmount, ViewBag.CollectionsAmount as SelectList, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.CollectionsAmount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RealEstateOption)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.RealEstateOption, typeof(RealEstateOptionForSellEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.RealEstateOption)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.WorkingOperatoryCount)
+                            <div>
+                                @Html.TextBoxFor(model => model.WorkingOperatoryCount, new { @class = "form-control window-unload-bound", type = "number", min = 1, max = 1000, placeholder = "3" })
+                                @Html.ValidationMessageFor(model => model.WorkingOperatoryCount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ExpandableOperatoryCount)
+                            <div>
+                                @Html.TextBoxFor(model => model.ExpandableOperatoryCount, new { @class = "form-control window-unload-bound", type = "number", min = 0, max = 1000, placeholder = "0" })
+                                @Html.ValidationMessageFor(model => model.ExpandableOperatoryCount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IsDoctorWillingToStayOnAfterTransition)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.IsDoctorWillingToStayOnAfterTransition, typeof(BooleanEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.IsDoctorWillingToStayOnAfterTransition)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AdditionalNotes)
+
+                            <div>
+                                @Html.TextAreaFor(m => m.AdditionalNotes, 8, 50, new { @class = "form-control window-unload-bound", maxlength = "1000000", placeholder = "Anything else you would like to tell us about you or your practice, any additional instructions or questions you may have." })
+                                @Html.ValidationMessageFor(m => m.AdditionalNotes)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HowDidYouHearAboutUs)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.HowDidYouHearAboutUs, typeof(HowDidYouHearAboutUsEnum), false, true, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUs)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="howDidYouHearAboutUsDetailPanel">
+                            <label id="howDidYouHearAboutUsDetailLabel" for="@nameof(Model.HowDidYouHearAboutUsDetail)">How did you hear about us details</label>
+                            <div>
+                                @Html.TextBoxFor(model => model.HowDidYouHearAboutUsDetail, new { @class = "form-control window-unload-bound" })
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUsDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Recaptcha(RecaptchaSettings.Value)
+                            @Html.ValidationMessage("reCaptchaError", new { @class = "text-danger" })
+                        </div>
+                        <input type="submit" value="Submit" class="btn btn-primary" style="max-width: 100px;" id="submit" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section scripts{ 
+}
+    <script src="~/js/recaptchaScrollFix.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ShowIosCompatibilityIfApplicable();
+            SetHowDidYouHearAboutUsDetail();
+        });
+
+        document.getElementsByClassName('g-recaptcha')[0].setAttribute('data-callback', 'scrollFixCaptcha');
+    </script>
+}

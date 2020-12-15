@@ -1,0 +1,195 @@
+﻿@using BencoPracticeTransitions.Framework.Enums
+@using BencoPracticeTransitions.Framework.Extensions
+@using Microsoft.Extensions.Options
+@using reCAPTCHA.AspNetCore
+@model BencoPracticeTransitions.ViewModels.Practice.BuyPracticeModel
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
+@{
+    ViewBag.Title = "Buy a Practice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel-body panel-primary">
+                <div id="iosAlertPlaceholder"></div>
+                <div><partial name="_Alert"/></div>
+                <div class="panel panel-default" style="width: 100%">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>Buy a Practice</h4>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactFirstName)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.ContactFirstName, new {@class = "form-control window-unload-bound", placeholder = "John"})
+                                @Html.ValidationMessageFor(m => m.ContactFirstName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactLastName)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.ContactLastName, new {@class = "form-control window-unload-bound", placeholder = "Doe"})
+                                @Html.ValidationMessageFor(m => m.ContactLastName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(m => m.ContactPhoneNumber)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.ContactPhoneNumber, new {@class = "form-control window-unload-bound", placeholder = "1-800-462-3626"})
+                                @Html.ValidationMessageFor(m => m.ContactPhoneNumber)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(m => m.ContactEmail)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.ContactEmail, new {@class = "form-control window-unload-bound", placeholder = "jdoe@example.net"})
+                                @Html.ValidationMessageFor(m => m.ContactEmail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PracticeType)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.PracticeType, new {@class = "form-control window-unload-bound", placeholder = "Endodontic"})
+                                @Html.ValidationMessageFor(m => m.PracticeType)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PurchaseLocation)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.PurchaseLocation, new {@class = "form-control window-unload-bound", @placeholder = "See help text below"})
+                                @Html.ValidationMessageFor(m => m.PurchaseLocation)
+                                <span class="help-block" style="text-align: justify">
+                                    Note: You can be as specific or broad as you would like. For example you can enter "NYC" or "Lower Manhattan".
+                                    You can specify a state such as "Florida" or part of a state such as "Northern California". You can also specify
+                                    more general terms like "Rural area" or "West of Mississippi"
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CollectionsAmount)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.CollectionsAmount, ViewBag.CollectionsAmount as SelectList, new {@class = "form-control window-unload-bound"})
+                                @Html.ValidationMessageFor(model => model.CollectionsAmount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MinPurchaseAmount)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.MinPurchaseAmount, new {@class = "form-control window-unload-bound", type = "number", min = 0, max = 10000000, placeholder = "0"})
+                                @Html.ValidationMessageFor(m => m.MinPurchaseAmount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MaxPurchaseAmount)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.MaxPurchaseAmount, new {@class = "form-control window-unload-bound", type = "number", min = 0, max = 10000000, placeholder = "1,000,000"})
+                                @Html.ValidationMessageFor(m => m.MaxPurchaseAmount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MinOperatoryCount)
+
+                            <div>
+                                @Html.TextBoxFor(m => m.MinOperatoryCount, new {@class = "form-control window-unload-bound", type = "number", min = 1, max = 1000, placeholder = "4"})
+                                @Html.ValidationMessageFor(m => m.MinOperatoryCount)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IsDoctorWillingToStayOnAfterTransition)
+
+                            <div>
+                                @Html.DropDownListFor(m => m.IsDoctorWillingToStayOnAfterTransition, typeof(BooleanEnum), false, true, new {@class = "form-control window-unload-bound"})
+                                @Html.ValidationMessageFor(m => m.IsDoctorWillingToStayOnAfterTransition)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RealEstateOption)
+                            <div>
+                                @Html.DropDownListFor(m => m.RealEstateOption, typeof(RealEstateOptionForBuyEnum), false, true, new {@class = "form-control window-unload-bound"})
+                                @Html.ValidationMessageFor(m => m.RealEstateOption)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AdditionalNotes)
+
+                            <div>
+                                @Html.TextAreaFor(m => m.AdditionalNotes, 8, 50, new {@class = "form-control window-unload-bound", maxlength = "1000000", placeholder = "Anything else you would like to tell us about you or the kind of practice you are seeking, any additional instructions or questions you may have."})
+                                @Html.ValidationMessageFor(m => m.AdditionalNotes)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HowDidYouHearAboutUs)
+
+                            <div>
+                                @Html.DropDownListFor(model => model.HowDidYouHearAboutUs, typeof(HowDidYouHearAboutUsEnum), false, true, new {@class = "form-control window-unload-bound"})
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUs)
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="howDidYouHearAboutUsDetailPanel">
+                            <label id="howDidYouHearAboutUsDetailLabel" for="@nameof(Model.HowDidYouHearAboutUsDetail)">How did you hear about us details</label>
+                            <div>
+                                @Html.TextBoxFor(model => model.HowDidYouHearAboutUsDetail, new {@class = "form-control window-unload-bound"})
+                                @Html.ValidationMessageFor(model => model.HowDidYouHearAboutUsDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Recaptcha(RecaptchaSettings.Value)
+                            @Html.ValidationMessage("reCaptchaError", new {@class = "text-danger"})
+                        </div>
+                        <input type="submit" value="Submit" class="btn btn-primary" style="max-width: 100px;" id="submit"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section scripts
+{
+    <script src="~/js/recaptchaScrollFix.js"></script>
+    <script type="text/javascript">        
+        $(document).ready(function () {
+            ShowIosCompatibilityIfApplicable();
+            SetHowDidYouHearAboutUsDetail();
+        });
+
+        document.getElementsByClassName('g-recaptcha')[0].setAttribute('data-callback', 'scrollFixCaptcha');
+    </script>
+}
+}

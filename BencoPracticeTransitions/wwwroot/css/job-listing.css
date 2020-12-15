@@ -1,0 +1,19 @@
+﻿
+/* needs remain being used by js to select elements */
+.hours-input {
+
+}
+
+/* On XS and S screens job hours are single column so let browser determine height*/
+@media screen and (max-width: 767px) {
+    .hours-input-with-errors {
+        min-height: 1px;
+    }
+}
+
+/* On medium and larger hours are in columns so we need to specifiy a height to make sure everything floats correctly*/
+@media screen and (min-width: 768px) {
+    .hours-input-with-errors {
+        min-height: 98px;
+    }
+}

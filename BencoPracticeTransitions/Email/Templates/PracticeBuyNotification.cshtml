@@ -1,0 +1,79 @@
+﻿@using BencoPracticeTransitions.Framework.Enums
+@using BencoPracticeTransitions.Framework.Extensions
+@using BencoPracticeTransitions.Framework.Helper
+@using BencoPracticeTransitions.ViewModels.Practice
+@model BuyPracticeModel
+@{
+    var type = Model.GetType();
+}
+    <p style="font-family: Calibri; font-size: 12pt;">A new practice buyer has been submitted.</p>
+    <table>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.ContactFirstName))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ContactFirstName</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.ContactLastName))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ContactLastName</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.ContactPhoneNumber))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ContactPhoneNumber</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.ContactEmail))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ContactEmail</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.PracticeType))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.PracticeType</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.PurchaseLocation))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.PurchaseLocation</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.CollectionsAmount))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.CollectionsAmount</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.MinPurchaseAmount))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@($"{Model.MinPurchaseAmount:c}")</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.MaxPurchaseAmount))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@($"{Model.MaxPurchaseAmount:c}")</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.MinOperatoryCount))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.MinOperatoryCount.ToString()</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.IsDoctorWillingToStayOnAfterTransition))</b></p></td>
+            @if (Model.IsDoctorWillingToStayOnAfterTransition == true) // TODO Refactor this
+            {
+                <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>Yes</p></td>
+            }
+            else
+            {
+                <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>No</p></td>
+            }
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.RealEstateOption))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@(Model.RealEstateOption == RealEstateOptionForBuyEnum.RentingLeasing.ToString() ? RealEstateOptionForBuyEnum.RentingLeasing.Description() : Model.RealEstateOption)</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.AdditionalNotes))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.AdditionalNotes</p></td>
+        </tr>
+        <tr>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>@DisplayNameHelper.GetDisplayName(type, nameof(Model.HowDidYouHearAboutUs))</b></p></td>
+            <td><p style="font-family: Calibri; font-size: 12pt;"><b>: </b>@Model.ReferredBy</p></td>
+        </tr>
+
+    </table>
+
+<p style="font-family: Calibri; font-size: 12pt;">Please see attached.</p>
+<hr />
+<p style="font-family: Calibri; font-size: 10pt;"><i>This is an automated email. Please do not reply.</i></p>
